@@ -1,0 +1,56 @@
+.todo{
+    margin: 10px;
+    padding: 10px;
+    h1{
+        margin-top: 10px;
+        text-align: center;
+        font-size: 50px;
+        font-weight: bold;
+    }
+    h3{
+        margin-top: 10px;
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .add{
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        input{
+            padding: 15px;
+            width: 25%;
+            height: 30%;
+        }
+        button{
+            background: tomato;
+            padding: 15px;
+            border: greenyellow;
+            border-radius: 8px;
+            color: aliceblue;
+            font-weight: bold;
+        }
+    }
+    .list{
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        li{
+            list-style-type:none;
+            font-size: 25px;
+            padding: 5px;
+        }
+        button{
+            background: tomato;
+            padding: 8px;
+            margin-right: 5px;
+            border: greenyellow;
+            border-radius: 8px;
+            color: aliceblue;
+            font-weight: bold;
+        } 
+    }
+
+}
