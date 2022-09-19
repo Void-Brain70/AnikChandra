@@ -1,215 +1,312 @@
 <template>
-<div class="demo">
-    <!-- color -->
-    <div class="deep-purple accent-1 text-center">
-        <span class="white--text text-h3">Vuetify</span>
-        <v-row class="d-flex justify-space-around">
-        <v-col cols="auto">
-            <v-card width="200" height="200" class="overflow-auto ma-5">
+  <v-container fluid>
+    <v-data-table
+      dense
+      :headers="headers"
+      :items="categories"
+      :search="search"
+      :footer-props="footerProps"
+      :items-per-page="20"
+      class="elevation-1"
+      :loading="isLoading"
+    >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toolbar-title> {{ pageInfo.pageName }}</v-toolbar-title>
+          <v-divider class="mx-4" inset vertical></v-divider>
+          <div class="mr-2">
+            <v-text-field
+              v-model="search"
+              label="Search"
+              class="mt-3"
+            ></v-text-field>
+          </div>
+          <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" persistent max-width="500">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                style="background-color: #01579B"
+                class="mx-2 white--text"
+                v-bind="attrs"
+                icon
+                v-on="on"
+                @click="create"
+                small
+              >
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+            <v-card>
+              <!-- <validation-observer ref="observer" v-slot="{ invalid }"> -->
+              <v-form ref="form" @submit.prevent="takeAction">
+                <v-card-title class="text-h5">
+                  {{ editMode ? "Update " : "Create" }}
+                  {{ pageInfo.pageName }}
+                </v-card-title>
                 <v-card-text>
-                    <h3>Overflow Auto</h3>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-                    facilis dicta esse molestias vero hic laudantium provident nisi eos
-                    quasi iusto alias sequi, aut aliquid voluptatibus commodi! Minima, eum
-                    voluptates?
-                </v-card-text>
-            </v-card>
-            <v-btn depressed color="pink lighten-1" class="white--text" >Read More</v-btn>
-        </v-col>
-        <v-col cols="auto">
-            <v-card width="200" height="200" class="overflow-auto ma-5">
-                <v-card-text>
-                    <h3>Overflow Hidden</h3>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-                    facilis dicta esse molestias vero hic laudantium provident nisi eos
-                    quasi iusto alias sequi, aut aliquid voluptatibus commodi! Minima, eum
-                    voluptates?
-                </v-card-text>
-            </v-card>
-            <v-btn depressed color="pink lighten-1" class="white--text" >Read More</v-btn>
-        </v-col>
-        <v-col cols="auto">
-            <v-card width="200" height="200" class="overflow-auto ma-5">
-                <v-card-text>
-                    <h3>Overflow visible</h3>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-                    facilis dicta esse molestias vero hic laudantium provident nisi eos
-                    quasi iusto alias sequi, aut aliquid voluptatibus commodi! Minima, eum
-                    voluptates?
-                </v-card-text>
-            </v-card>
-            <v-btn depressed color="pink lighten-1" class="white--text" >Read More</v-btn>
-        </v-col>
-    </v-row>
-    <v-row class="d-flex justify-space-around">
-    <v-card class="mx-auto" max-width="400">
-        <v-img class="white--text align-end" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
-            <v-card-title>Top 10 Australian beaches</v-card-title>
-        </v-img>
-        <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-        <v-card-text class="text--primary">
-            <div>Whitehaven Beach</div>
-            <div>Whitsunday Island, Whitsunday Islands</div>
-        </v-card-text>
-        <v-card-actions>
-            <v-btn color="orange" text> Share </v-btn>
-            <v-btn color="orange" text> Explore</v-btn>
-        </v-card-actions>
-    </v-card>
-
-    <v-card class="mx-auto" max-width="400">
-        <v-img class="white--text align-end" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
-            <v-card-title>Top 10 Australian beaches</v-card-title>
-        </v-img>
-        <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-        <v-card-text class="text--primary">
-            <div>Whitehaven Beach</div>
-            <div>Whitsunday Island, Whitsunday Islands</div>
-        </v-card-text>
-        <v-card-actions>
-            <v-btn color="orange" text> Share </v-btn>
-            <v-btn color="orange" text> Explore</v-btn>
-        </v-card-actions>
-    </v-card>
-
-    <v-card class="mx-auto" max-width="400">
-        <v-img class="white--text align-end" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
-            <v-card-title>Top 10 Australian beaches</v-card-title>
-        </v-img>
-        <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-        <v-card-text class="text--primary">
-            <div>Whitehaven Beach</div>
-            <div>Whitsunday Island, Whitsunday Islands</div>
-        </v-card-text>
-        <v-card-actions>
-            <v-btn color="orange" text> Share </v-btn>
-            <v-btn color="orange" text> Explore</v-btn>
-        </v-card-actions>
-    </v-card>
-    </v-row>
-    
-
-
-
-    <v-row justify="space-around" class="ma-5">
-        <v-col cols="auto">
-            <v-dialog transition="dialog-bottom-transition" max-width="600">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="primary" v-bind="attrs" v-on="on">Open</v-btn>
-                </template>
-                <template v-slot:default="dialog">
-                    <v-card>
-                        <v-toolbar color="primary" dark>Opening from the bottom</v-toolbar>
-                        <v-card-text>
-                            <div class="text-h2 pa-12">Hello world!</div>
-                        </v-card-text>
-                        <v-card-actions class="justify-end">
-                            <v-btn text   @click="dialog.value = false">Close</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </template>
-            </v-dialog>
-        </v-col>
-    </v-row>
-
-    
-
-
-</div>
-    <!-- border radius  -->
-    <!-- <v-row class="pa-10 ma-10">
-        <v-col clos="12" md="3">
-            <div class="pa-4 text-center deep-purple accent-1 text-no-wrap rounded-lg">rounded-sm</div>
-        </v-col>
-    </v-row> -->
-    <!-- display-helper -->
-    <!-- <div class="d-table pa-2 ma-2 pink lighten-1 text-center white--text">
-        Anik Das
-    </div>  -->
-    <!-- elevation -->
-    <!-- <v-container>
-        <v-row justify="center">
-            <v-col v-for="n in 1" :key="n" cols="auto">
-                <v-card :elevation="23" height="100"  width="100" class="light-blue lighten-3">
-                    <v-row class="fill-height" align="center"  justify="center" v-text="n - 1">
+                  <v-container>
+                    <v-row dense align="baseline" justify="center">
+                      <v-col cols="12" xs="12" sm="12">
+                        <!-- <validation-provider
+                            v-slot="{ errors }"
+                            name="Name"
+                            rules="required|max:191"
+                            vid="name"
+                          > -->
+                        <v-text-field
+                          v-model="formData.title"
+                          label="Name"
+                          required
+                          dense
+                          outlined
+                        ></v-text-field>
+                        <!-- </validation-provider> -->
+                      </v-col>
+                      <v-col cols="12" sm="12">
+                        <!-- <validation-provider
+                            v-slot="{ errors }"
+                            name="Description"
+                            vid="description"
+                            rules=""
+                          > -->
+                        <v-textarea
+                          v-model="formData.attended"
+                          clearable
+                          clear-icon="mdi-close-circle"
+                          label="Description"
+                          dense
+                          outlined
+                          height="75"
+                        ></v-textarea>
+                        <!-- </validation-provider> -->
+                      </v-col>
                     </v-row>
-                </v-card>
-            </v-col>
-        </v-row>
-    </v-container> -->
-
-    <!-- <div class="text--primary">
-        <v-hover>
-            <template v-slot:default="{ hover }">
-                <v-card :elevation="hover ? 20 : 1" class="pa-6 ma-10 text-center deep-purple lighten-2">
-                    Prop based elevation
-                </v-card>
-            </template>
-        </v-hover>
-    </div> -->
-
-    <!-- overflow -->
-    <!-- <v-row>
-        <v-col cols="auto">
-            <v-card width="200" height="200" class="overflow-auto ma-5">
-                <v-card-text>
-                    <h3>Overflow Auto</h3>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-                    facilis dicta esse molestias vero hic laudantium provident nisi eos
-                    quasi iusto alias sequi, aut aliquid voluptatibus commodi! Minima, eum
-                    voluptates?
+                  </v-container>
                 </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="green darken-1"
+                    class="mx-2 white--text"
+                    type="submit"
+                    :loading="loader.isSubmitting"
+                    depressed
+                  >
+                    {{ editMode ? "Update" : "Save" }}
+                  </v-btn>
+                  <v-btn
+                    class="mr-2 error darken-1 white--text"
+                    depressed
+                    @click="closeModal"
+                  >
+                    Close
+                  </v-btn>
+                </v-card-actions>
+              </v-form>
+              <!-- </validation-observer> -->
             </v-card>
-        </v-col>
-    </v-row> -->
-
-    <!-- Transitions -->
-    <!-- <v-row justify="center">
-        <v-menu transition="scroll-y-transition">
-            <template  v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" class="ma-2" v-bind="attrs"  v-on="on">
-                    Slide X Transition
-                </v-btn>
-            </template>
-            <v-list>
-                <v-list-item v-for="n in 5"  :key="n" link>
-                    <v-list-item-title v-text="'Item ' + n" ></v-list-item-title>
-                </v-list-item>
-            </v-list>
-        </v-menu>
-    </v-row> -->
-
-    <!-- alert -->
-    <!-- <div>
-        <v-alert border="right" colored-border type="error" elevation="5" class="ma-3">
-            I'm an alert with a top border and red color
-        </v-alert>
-    </div>
-    <div>
-        <div class="text-center mb-4">
-            <v-btn  color="primary"  @click="alert = !alert">Toggle</v-btn>
-        </div>
-        <v-alert :value="alert" color="pink" dark border="top" icon="mdi-home" transition="scale-transition">
-            Hi I am Anik Das
-        </v-alert>
-    </div> -->
-
-    <!-- Avatar -->
-    <!-- <v-avatar color="indigo" size="50" class="ma-10 ">
-        <span class="white--text text-h5">50</span>
-    </v-avatar> -->
-
-</div>    
+          </v-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:item.action="{ index, item }">
+        <v-btn x-small class="mr-2" color="accent" fab @click="editItem(item)">
+          <v-icon> mdi-pencil </v-icon>
+        </v-btn>
+        <v-btn color="error" x-small fab @click="deleteItem(index, item.id)">
+          <v-icon> mdi-delete </v-icon>
+        </v-btn>
+      </template>
+    </v-data-table>
+  </v-container>
 </template>
-
-
 <script>
-    export default {
-      name: "MainSection",
+import { mapGetters, mapActions } from "vuex";
+export default {
+  name: "CateGory",
+  head: {
+    title: "Category",
+    meta: [
+      {
+        hid: "description",
+        name: "description",
+        content: "Card Category",
+      },
+    ],
+  },
+  data() {
+    return {
+      pageInfo: {
+        pageName: "Card Categories",
+        apiUrl:
+          "https://summer-canyon-zh9zckabi5cf.vapor-farm-f1.com/api/written-exam",
+        permission: "",
+      },
+      items: [],
+      selectedItem: null,
+      totalItems: 0,
+      options: {},
+      dialog: false,
+      editMode: false,
+      loader: {
+        isSubmitting: false,
+      },
+      formData: {
+        title: "",
+        attended: "",
+      },
+      search: "",
+      headers: [
+        {
+          text: "title",
+          align: "start",
+          value: "title",
+        },
+        {
+          text: "attended",
+          align: "start",
+          value: "attended",
+        },
+        { text: "Actions", value: "action", sortable: false },
+      ],
+      footerProps: {
+        itemsPerPageOptions: [20, 50, 100, 500],
+      },
+    };
+  },
+  computed: {
+    ...mapGetters(["categories", "isLoading"]),
+    form: function () {
+      const formData = new FormData();
+      if (this.editMode) {
+        formData.append("_method", "PUT");
+      }
+      formData.append("title", this.formData.title);
+      formData.append(
+        "attended",
+        this.formData.attended ? this.formData.attended : ""
+      );
+      return formData;
+    },
+  },
+  // watch: {
+  //   dialog(val) {
+  //     val || this.closeModal();
+  //   },
+  // },
+  created() {
+    if (this.categories && this.categories.length < 1) {
+      this.GET_ALL_CATEGORIES();
     }
-  </script>
-
-
-<script lang="scss">
-
+  },
+  methods: {
+    ...mapActions(["GET_ALL_CATEGORIES"]),
+    create() {
+      this.editMode = false;
+      this.selectedItem = null;
+      this.formData = {
+        title: "",
+      };
+    },
+    editItem(item) {
+      this.dialog = true;
+      this.editMode = true;
+      this.selectedItem = item;
+      this.formData = {
+        title: item.title || "",
+        attended: item.attended || "",
+      };
+    },
+    takeAction() {
+      this.editMode ? this.update() : this.submit();
+    },
+    async submit() {
+      this.loader.isSubmitting = true;
+      await this.axios
+        .post(this.pageInfo.apiUrl, this.form)
+        .then((response) => {
+          this.dialog = false;
+          this.$store.commit("ADD_NEW", response.data.data);
+          this.clear();
+          this.$toaster.success(
+            `${this.pageInfo.pageName} created successfully!!`
+          );
+        })
+        .catch((error) => {
+          this.refs?.observer.setErrors(error.response.data);
+          this.$toaster.error("Something went wrong!!");
+        })
+        .finally(() => (this.loader.isSubmitting = false));
+    },
+    async update() {
+      this.loader.isSubmitting = true;
+      await this.axios
+        .post(`${this.pageInfo.apiUrl}/${this.selectedItem.id}`, this?.form)
+        .then((response) => {
+          this.$store.commit("UPDATE", response.data.data);
+          this.dialog = false;
+          this.$toaster.success(
+            `${this.pageInfo.pageName} Updated successfully!!`
+          );
+          this.clear();
+        })
+        .catch((error) => {
+          this.refs?.observer.setErrors(error.response.data);
+          this.$toaster.error("Something went wrong!!");
+        })
+        .finally(() => (this.loader.isSubmitting = false));
+    },
+    async deleteItem(index, id) {
+      this.$swal
+        ?.fire({
+          title: "Are you sure?",
+          icon: "warning",
+          text: `Do you want to delete this ${this.pageInfo.pageName}?`,
+          showCancelButton: true,
+          confirmButtonColor: "#3085D6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+        })
+        .then(async (result) => {
+          if (result.isConfirmed) {
+            this.loader.isDeleting = this.items.id;
+            await this.axios
+              .delete(`${this.pageInfo.apiUrl}/${id}`)
+              .then((response) => {
+                console.log(response);
+                this.$store.commit("DELETE", index);
+                this.$toaster.success(
+                  `${this.pageInfo.pageName} Deleted successfully!!`
+                );
+              })
+              .finally(() => (this.loader.isDeleting = false));
+          }
+        });
+    },
+    // async deleteItem(index, id) {
+    //   this.loader.isDeleting = this.items.id;
+    //   await this.axios
+    //     .delete(`${this.pageInfo.apiUrl}/${id}`)
+    //     .then((response) => {
+    //       console.log(response);
+    //       this.$store.commit("DELETE", index);
+    //       this.$toaster.success(
+    //         `${this.pageInfo.pageName} Deleted successfully!!`
+    //       );
+    //     })
+    //     .finally(() => (this.loader.isDeleting = false));
+    // },
+    closeModal() {
+      this.dialog = false;
+      this.selectedItem = null;
+      this.editMode = false;
+      this.refs?.observer.reset();
+    },
+    clear() {
+      this.editMode = false;
+      this.selectedItem = null;
+      this.refs?.form.reset();
+      this.refs?.observer.reset();
+    },
+  },
+};
 </script>

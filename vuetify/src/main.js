@@ -4,6 +4,26 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+import 'v-toaster/dist/v-toaster.css'
+import Toaster from 'v-toaster'
+
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+Vue.use(VueSweetalert2);
+
+
+import { ValidationObserver } from "vee-validate";
+import { ValidationProvider } from 'vee-validate/dist/vee-validate.full.esm';
+Vue.component("ValidationObserver", ValidationObserver);
+Vue.component("ValidationProvider", ValidationProvider);
+
+
+
+Vue.use(VueAxios, axios)
+Vue.use(Toaster, {timeout: 5000})
 Vue.config.productionTip = false
 
 new Vue({
