@@ -6,9 +6,11 @@ import vuetify from './plugins/vuetify'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
 
 import 'v-toaster/dist/v-toaster.css'
 import Toaster from 'v-toaster'
+Vue.use(Toaster, {timeout: 5000})
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -21,9 +23,6 @@ Vue.component("ValidationObserver", ValidationObserver);
 Vue.component("ValidationProvider", ValidationProvider);
 
 
-
-Vue.use(VueAxios, axios)
-Vue.use(Toaster, {timeout: 5000})
 Vue.config.productionTip = false
 
 new Vue({
