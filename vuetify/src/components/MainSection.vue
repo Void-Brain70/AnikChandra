@@ -37,7 +37,7 @@
               </v-btn>
             </template>
             <v-card>
-              <!-- <validation-observer ref="observer" v-slot="{ invalid }"> -->
+              <validation-observer ref="observer" v-slot="{ invalid }">
               <v-form ref="form" @submit.prevent="takeAction">
                 <v-card-title class="text-h5">
                   {{ editMode ? "Update " : "Create" }}
@@ -47,28 +47,49 @@
                   <v-container>
                     <v-row dense align="baseline" justify="center">
                       <v-col cols="12" xs="12" sm="12">
-                        <!-- <validation-provider
+                        <validation-provider
                             v-slot="{ errors }"
-                            name="Name"
+                            name="Title"
                             rules="required|max:191"
-                            vid="name"
-                          > -->
+                            vid="title"
+                          >
                         <v-text-field
                           v-model="formData.title"
-                          label="Name"
+                          label="Title"
                           required
                           dense
                           outlined
                         ></v-text-field>
-                        <!-- </validation-provider> -->
+                        <v-text-field
+                          v-model="formData.mode"
+                          label="Mode"
+                          required
+                          dense
+                          outlined
+                        ></v-text-field>
+                        <v-text-field
+                          v-model="formData.duration"
+                          label="Duration"
+                          required
+                          dense
+                          outlined
+                        ></v-text-field>
+                        <v-text-field
+                          v-model="formData.pass_mark"
+                          label="Pass_Mark"
+                          required
+                          dense
+                          outlined
+                        ></v-text-field>
+                        </validation-provider>
                       </v-col>
                       <v-col cols="12" sm="12">
-                        <!-- <validation-provider
+                        <validation-provider
                             v-slot="{ errors }"
                             name="Description"
                             vid="description"
                             rules=""
-                          > -->
+                          >
                         <v-textarea
                           v-model="formData.attended"
                           clearable
@@ -78,7 +99,7 @@
                           outlined
                           height="75"
                         ></v-textarea>
-                        <!-- </validation-provider> -->
+                        </validation-provider>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -103,7 +124,7 @@
                   </v-btn>
                 </v-card-actions>
               </v-form>
-              <!-- </validation-observer> -->
+              </validation-observer>
             </v-card>
           </v-dialog>
         </v-toolbar>
@@ -153,18 +174,35 @@ export default {
       formData: {
         title: "",
         attended: "",
+        mode:"",
+        duration:"",
       },
       search: "",
       headers: [
         {
-          text: "title",
+          text: "Title",
           align: "start",
           value: "title",
         },
         {
-          text: "attended",
+          text: "Attended",
           align: "start",
           value: "attended",
+        },
+        {
+          text: "Mode",
+          align: "start",
+          value: "mode",
+        },
+        {
+          text: "Duration",
+          align: "start",
+          value: "duration",
+        },
+        {
+          text: "Pass Mark",
+          align: "start",
+          value: "pass_mark",
         },
         { text: "Actions", value: "action", sortable: false },
       ],
@@ -185,14 +223,17 @@ export default {
         "attended",
         this.formData.attended ? this.formData.attended : ""
       );
+      formData.append("mode", this.formData.mode);
+      formData.append("duration", this.formData.duration);
+      formData.append("pass_mark",this.formData.pass_mark);
       return formData;
     },
   },
-  // watch: {
-  //   dialog(val) {
-  //     val || this.closeModal();
-  //   },
-  // },
+  watch: {
+    dialog(val) {
+      val || this.closeModal();
+    },
+  },
   created() {
     if (this.categories && this.categories.length < 1) {
       this.GET_ALL_CATEGORIES();
@@ -214,6 +255,9 @@ export default {
       this.formData = {
         title: item.title || "",
         attended: item.attended || "",
+        mode: item.mode || "",
+        duration: item.duration || "",
+        pass_mark: item.pass_mark || "",
       };
     },
     takeAction() {
