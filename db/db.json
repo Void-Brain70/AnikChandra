@@ -1,0 +1,94 @@
+{
+  "user": [
+    {
+      "name": "Anik",
+      "email": "anik@gmail.com",
+      "password": "1234",
+      "id": 1
+    },
+    {
+      "name": "koyel",
+      "email": "koyel@gmail.com",
+      "password": "4321",
+      "id": 2
+    },
+    {
+      "name": "koyel",
+      "email": "koyel@gmail.com",
+      "password": "4321",
+      "id": 3
+    },
+    {
+      "name": "priya",
+      "email": "priya@gmail.com",
+      "password": "1234",
+      "id": 4
+    },
+    {
+      "name": "Abir",
+      "email": "abir@gmail.com",
+      "password": "78994",
+      "id": 5
+    },
+    {
+      "name": "partho ",
+      "email": "partho@gmail.com",
+      "password": "partho",
+      "id": 6
+    },
+    {
+      "name": "priya",
+      "email": "priya@gmail..com",
+      "password": "1234",
+      "id": 7
+    },
+    {
+      "name": "priya",
+      "email": "priya@gmail.com",
+      "password": "1241",
+      "id": 8
+    },
+    {
+      "name": "oni ",
+      "email": "oni@gmail.com",
+      "password": "1234",
+      "id": 9
+    },
+    {
+      "name": "jahid",
+      "email": "jahid@gmail.com",
+      "password": "1234",
+      "id": 10
+    },
+    {
+      "name": "nayeem",
+      "email": "nayeem@gmail.com",
+      "password": "1234",
+      "id": 11
+    },
+    {
+      "name": "leon",
+      "email": "leon@gmail.com",
+      "password": "1234",
+      "id": 12
+    },
+    {
+      "name": "akhi",
+      "email": "akhi@gmail.com",
+      "password": "1234",
+      "id": 13
+    },
+    {
+      "name": "xyz",
+      "email": "xyz@gmail.com",
+      "password": "1234",
+      "id": 14
+    },
+    {
+      "name": "mama",
+      "email": "mama@gmail.com",
+      "password": "1234",
+      "id": 15
+    }
+  ]
+}
