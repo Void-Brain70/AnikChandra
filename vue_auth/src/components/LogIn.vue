@@ -1,68 +1,74 @@
 <template>
+  <div>
     <div>
-        <div>
-        <h1>Login</h1>
-        <div class="login">
-            <input type="text"  v-model="email" placeholder="Enter Email">
-            <input type="password" v-model="password"  placeholder="Enter Password">
-            <button  v-on:click="login" >Login</button>
-        </div>
+      <h1>Login</h1>
+      <div class="login">
+        <input type="text" v-model="formData.email" placeholder="Enter Email" />
+        <input
+          type="password"
+          v-model="formData.password"
+          placeholder="Enter Password"
+        />
+        <button v-on:click="login()">Login</button>
+      </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'    
 export default {
-    name:"LogIn",
-    data(){
-        return{
-            email:"",
-            password:""
-        }
+  name: "LogIn",
+  data() {
+    return {
+      formData: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
     },
-    methods:{
-        async login()
-        {
-            let formData = new FormData()
-            formData.append('email', 'admin@example.com')
-            formData.append('password', 'secret')
-            await axios.post('http://localhost:8000/api/login', formData).then((res) => {
-                console.log(res)
-            });
-           
-        }
+  },
+  methods: {
+    login() {
+        this.axios.post("api/login", {
+            email: this.formData.email,
+            password: this.formData.password,
+          })
+          .then((response) => {
+            this.$store.commit("SET_USER", response.data.user);
+            this.$store.commit("SET_IS_LOGGED_IN", true);
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("auth", true);
+            console.log(response);
+          });
     },
-    mounted(){
-        let user = localStorage.getItem('user-info');
-        if(user){
-            this.$router.push({name:'home'})
-        }
-    }
-}
+  },
+};
 </script>
 
 <style scoped>
-.login input{
-    width: 300px;
-    height: 40px;
-    padding-left:20px;
-    display: block;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid skyblue;
+.login input {
+  width: 300px;
+  height: 40px;
+  padding-left: 20px;
+  display: block;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid skyblue;
 }
-.login button{
-    width: 305px;
-    height: 40px;
-    border: 1px solid skyblue;
-    color: #fff;
-    background-color: skyblue;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    
+.login button {
+  width: 305px;
+  height: 40px;
+  border: 1px solid skyblue;
+  color: #fff;
+  background-color: skyblue;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 </style>
