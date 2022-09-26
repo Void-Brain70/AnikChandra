@@ -4,7 +4,7 @@
       max-width="344"
     >
       <v-img
-        :src="childrenDetails.photo"
+        :src="itemDetails.photo"
         height="200px"
       ></v-img>
   
@@ -48,7 +48,7 @@
 
 <script>
     export default {
-        props:['childrenDetails'],
+        props:['itemDetails'],
       data: () => ({
         show: false,
       }),
