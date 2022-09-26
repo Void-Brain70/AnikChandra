@@ -33,20 +33,26 @@ const router = new VueRouter({
             name: 'signup',
         },
     ]
-})
+});
 
 router.beforeEach((to, from, next) => {
+    let isauth = localStorage.getItem('auth')
     if(to.matched.some((record)=> record.meta.requiredAuth)){
-        let auth = localStorage.getItem('auth')
-        console.log(auth)
-        if (auth){
+        console.log(isauth)
+        if (isauth){
             next();
-            return;
+            return 
         }
         next("/login")
     }
-    else next()
-  })
+    else
+    {   if(isauth){
+        if(to.path=='/login' || to.path =='/signup'){
+            router.go(-1)
+        }
+    }
+    next()
+    }
+})
 
-
-export default router
+export default router;

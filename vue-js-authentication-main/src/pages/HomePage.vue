@@ -1,15 +1,12 @@
 <template>
 <div>
   <h1>Welcome to Home Page</h1>
-  <!-- <DragDrop></DragDrop> -->
 </div>
 </template>
 
 <script>
-// import DragDrop from './DragDrop.vue';
 export default {
     name: "HomePage",
-    // components: { DragDrop }
 }
 </script>
 
