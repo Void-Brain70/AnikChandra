@@ -3,7 +3,8 @@
     <v-container>
         <v-row>
             <v-col cols="3">
-                    <v-row v-for="(category, index) in categories" :key="index">
+                    <template v-if="categories && categories.length">
+                        <v-row v-for="(category, index) in categories" :key="index">
                         <h3 v-if="category.item.length">
                             {{category.name}}
                             <v-radio-group v-model="radioGroup">
@@ -11,6 +12,8 @@
                             </v-radio-group>
                         </h3>
                     </v-row>
+
+                    </template>
             </v-col>
             <v-col cols="9">
                 <div v-for="(item, index) in selectedItem " :key="index">
@@ -36,7 +39,7 @@ export default {
     },
     watch: {
         radioGroup: function () {
-            this.init(this.radioGroup);
+            this.getItem(this.radioGroup);
         }
     },
     mounted() {
