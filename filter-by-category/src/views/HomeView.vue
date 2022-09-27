@@ -4,6 +4,7 @@
         <v-container>
         <v-row>
             <v-col cols="3">
+                <template v-if="categories && categories.length">
                     <v-row v-for="(category, index) in categories" :key="index">
                         <h3 v-if="category.children.length">
                             {{category.name}}
@@ -12,10 +13,13 @@
                             </v-radio-group>
                         </h3>
                     </v-row>
+                </template>
             </v-col>
             <v-col cols="9">
-                <div v-for="(children, index) in childrens" :key="index">
-                    <CategorySide :childrenDetails="children" ></CategorySide>
+                <div class="cardview">
+                    <div v-for="(children, index) in  childrens " :key="index">
+                    <CategorySide :course="children" ></CategorySide>
+                </div>
                 </div>
             </v-col>
         </v-row>
@@ -26,49 +30,61 @@
 import CategorySide from '@/components/CategorySide.vue'
     export default {
         name: 'HomeView',
-        components:{CategorySide },
+        components:{ CategorySide },
         data(){
             return {
                 radioButtonValue: null,
-                categories: [],
+                categories: [], 
                 childrens: [],
             }
         },
         watch:{
             radioButtonValue: function(){
-                this.getChildren(this.radioButtonValue)
+                this.init(`course-by-category/${this.radioButtonValue}`)
             }
         },
         mounted(){
-            this.init()
+            if(this.categories && this.categories.length < 1){
+                this.init('course-category/all',true)
+            }
+            if(this. childrens && this. childrens.length < 1){
+                this.init('course',false)
+            }    
         },
         methods: {
-            async init(){
-                await this.axios.get('course-category/all')
+            async init(alldata,status){
+                await this.axios.get(alldata)
                     .then((response) => {
-                        this.categories = [...response.data.data]
+                        if(status){
+                            this.categories = response.data.data
+                        } else {
+                            this.childrens = response.data.data
+                        }
                     })
                     .catch((error) => {
                     console.log('Error: ', error)
                     })
             },
-            async getChildren(slug){
-                await this.axios.get(`course-by-category/${slug}`)
-                    .then((response) => {
-                        this.childrens = [...response.data.data]
-                    })
-                    .catch((error) => {
-                    console.log('Error: ', error)
-                    })
-            },
+            clearFilter(){
+                
+            }
         }
+        
     }
 </script>
 
 <style scoped>
 h1{
     text-align: center;
-    color: skyblue;
-    margin-top: 10px;
+    margin: 20px;
+    color: #EC407A
 }
+.cardview{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: space-around;
+    gap:10px;
+}
+
+
 </style>
