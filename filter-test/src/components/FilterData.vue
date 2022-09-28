@@ -118,17 +118,11 @@ export default {
     };
   },
   watch: {
-    divisionID() {
-      console.log(this.divisionID)
-    },
+
   },
   methods: {
-    getDistrict() {
-        this.forDistrict = this.districtData.districts.filter((el)=>{
-            return this.districtData.districts== 
-        })
-    },
-  },
+      
+  }
 };
 </script>
 <style scoped></style>
