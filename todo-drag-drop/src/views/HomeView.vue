@@ -6,15 +6,15 @@
 </template>
 
 <script>
-import ToDo from '@/components/ToDo.vue';
-import ItemList from '@/components/ItemList.vue';
+import ToDo from "@/components/ToDo.vue";
+import ItemList from "@/components/ItemList.vue";
 // @ is an alias to /src
 
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
     ToDo,
-    ItemList
-}
-}
+    ItemList,
+  },
+};
 </script>
